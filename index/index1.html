@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/Ass1/css/style.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="page">
+        <div class="smaller">
+            <header>
+                <div class="logo">
+                    <a href="./index.html"><img src="/Ass1/img/Logo.png" alt=""></a>
+                </div>
+                <div class="nav">
+                    <ul id="MenuItems">
+                        <li><a href="./index.html">Home</a></li>
+                        <li><a href="./index2.html">Products</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <img src="/Ass1/img/menu.png" alt="" class="Drop-down" onclick="Toggle()">
+                <div class="cart">
+                    <img src="/Ass1/img/Cart.png" alt="">
+                    <a href="/Ass1/index/index3.html">Sign In</a>
+                    <a href="/Ass1/index/index4.html">Sign Up</a>
+                </div>
+            </header>
+        </div>
+        <div class="smaller">
+            <div class="banner">
+                <div class="text--form">
+                    <h2>
+                        Big and Juicy Wagyu Beef<br>Cheeseburger<br>
+                        <span>$30</span>
+                    </h2>
+                    <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies
+                        mi vitae est. Mauris placerat eleifend leo.</p>
+                    <form action="">
+                        <input type="text" name="" class="inputPage2" placeholder="Quantity" required>
+                        <input type="submit" class="btnPage2" value="Add To Cart">
+                    </form>
+                </div>
+                <div class="banner--img">
+                    <img src="/Ass1/img/food.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="smaller">
+            <div class="container">
+                <h3>Related Products</h3>
+                <div class="containt--item containt--df"></div>
+            </div>
+        </div>
+        <div class="smaller">
+            <div class="footer">
+                <div class="logo">
+                    <a href="./index.html"><img src="/Ass1/img/Logo.png" alt=""></a>
+                </div>
+                <div class="nav">
+                    <ul>
+                        <li><a href="./index.html">Home</a></li>
+                        <li><a href="./index2.html">Products</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/Ass1/data/data.js"></script>
+    <script>
+        var MenuItems = document.getElementById("MenuItems");
+        var DropDown = document.querySelector(".Drop-down");
+        MenuItems.style.maxHeight = "0px";
+
+        function Toggle() {
+            if (MenuItems.style.maxHeight == "0px") {
+                MenuItems.style.maxHeight = "100px";
+            } else {
+                MenuItems.style.maxHeight = "0px";
+            }
+        }
+        document.addEventListener("click", e => {
+            if (e.target == DropDown) {
+                return;
+            }
+            MenuItems.style.maxHeight = "0px";
+        })
+    </script>
+</body>
+
+</html>

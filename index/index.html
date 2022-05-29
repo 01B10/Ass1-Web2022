@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/Ass1/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500&display=swap" rel="stylesheet">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="page">
+        <div class="smaller">
+            <header>
+                <div class="logo">
+                    <a href="./index.html"><img src="/Ass1/img/Logo.png" alt=""></a>
+                </div>
+                <div class="nav">
+                    <ul id="MenuItems">
+                        <li><a href="./index.html">Home</a></li>
+                        <li><a href="./index2.html">Products</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+                <img src="/Ass1/img/menu.png" alt="" class="Drop-down" onclick="Toggle()">
+                <div class="cart">
+                    <img src="/Ass1/img/Cart.png" alt="">
+                    <a href="/Ass1/index/index3.html">Sign In</a>
+                    <a href="/Ass1/index/index4.html">Sign Up</a>
+                </div>
+            </header>
+        </div>
+        <div class="smaller">
+            <div class="banner">
+                <div class="text--form">
+                    <img src="/Ass1/img/QualityFood.png" alt="">
+                    <h1>
+                        Fastest <span>Delivery</span> & Easy <span>Pickup</span>
+                    </h1>
+                    <p>Best cooks and best delivery guys all at your service. Hot tasty food will reach you in 60 minutes.</p>
+                    <form action="">
+                        <input type="text" name="" class="inputPage1" placeholder="Enter your delivery location..." required>
+                        <input type="submit" class="btnPage1" value="Discover">
+                    </form>
+                </div>
+                <div class="banner--img">
+                    <img src="/Ass1/img/Banner.png" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="smaller">
+            <div class="container">
+                <h1>Our Popular Dishes</h1>
+                <p>Lorem ipsum dolor sit amet, consectetuipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqut enim ad minim </p>
+                <div class="containt--item"></div>
+            </div>
+        </div>
+        <div class="smaller">
+            <div class="Categories">
+                <div class="view">
+                    <h1>Categories</h1>
+                    <button type="button" class="btn">View All Categories</button>
+                </div>
+                <div class="CategoriesAll">
+                    <div class="Categories--img">
+                        <img src="/Ass1/img/categories.png" alt="">
+                        <h4><a href="">Breakfast</a></h4>
+                    </div>
+                    <div class="Categories--img">
+                        <img src="/Ass1/img/categories1.png" alt="">
+                        <h4><a href="">Vegan</a></h4>
+                    </div>
+                    <div class="Categories--img">
+                        <img src="/Ass1/img/categories2.png" alt="">
+                        <h4><a href="">Meat</a></h4>
+                    </div>
+                    <div class="Categories--img">
+                        <img src="/Ass1/img/categories3.png" alt="">
+                        <h4><a href="">Dessert</a></h4>
+                    </div>
+                    <div class="Categories--img">
+                        <img src="/Ass1/img/categories4.png" alt="">
+                        <h4><a href="">Lunch</a></h4>
+                    </div>
+                    <div class="Categories--img">
+                        <img src="/Ass1/img/categories5.png" alt="">
+                        <h4><a href="">Chocolate</a></h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="smaller">
+            <div class="Contact">
+                <h1>Contact us</h1>
+                <form action="">
+                    <div class="form--infor">
+                        <div class="form--1">
+                            <label for="">
+                                <h4>NAME</h4>
+                                <input type="text" name="" id="" placeholder="Enter your name..." required>
+                            </label>
+                            <label for="">
+                                <h4>SUBJECT</h4>
+                                <input type="text" name="" id="" placeholder="Enter subject..." required>
+                            </label>
+                        </div>
+                        <div class="form--1">
+                            <label for="">
+                                <h4>EMAIL ADDRESS</h4>
+                                <input type="email" name="" id="" placeholder="Your email address..." required>
+                            </label>
+                            <label for="">
+                                <h4>ENQUIRY TYPE</h4>
+                                <input type="text" name="" id="" placeholder="Advertising..." required>
+                            </label>
+                        </div>
+                    </div>
+                    <label for="">
+                        <h4>MESSAGES</h4>
+                        <textarea name="" id="" cols="0" rows="14" class="message" placeholder="Enter your messages..."></textarea>
+                    </label>
+                    <input type="submit" class="Submit" value="Submit">
+                </form>
+            </div>
+        </div>
+        <div class="smaller">
+            <div class="footer">
+                <div class="logo">
+                    <a href="./index.html"><img src="/Ass1/img/Logo.png" alt=""></a>
+                </div>
+                <div class="nav">
+                    <ul>
+                        <li><a href="./index.html">Home</a></li>
+                        <li><a href="./index2.html">Products</a></li>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/Ass1/data/data.js"></script>
+    <script>
+        var MenuItems = document.getElementById("MenuItems");
+        var DropDown = document.querySelector(".Drop-down");
+        MenuItems.style.maxHeight = "0px";
+
+        function Toggle() {
+            if (MenuItems.style.maxHeight == "0px") {
+                MenuItems.style.maxHeight = "100px";
+            } else {
+                MenuItems.style.maxHeight = "0px";
+            }
+        }
+        document.addEventListener("click", e => {
+            if (e.target == DropDown) {
+                return;
+            }
+            MenuItems.style.maxHeight = "0px";
+        })
+    </script>
+</body>
+
+</html>
