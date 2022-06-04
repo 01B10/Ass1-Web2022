@@ -13,8 +13,8 @@ const arrFood = [{
         Timer: "/img/Timer.png",
         Fork: "/img/ForkKnife.png",
         Food: "Fish",
-        Path: "#",
-        Price: 30
+        Path: "./index1.html",
+        Price: 10
     },
     {
         img: "/img/food2.png",
@@ -22,8 +22,8 @@ const arrFood = [{
         Timer: "/img/Timer.png",
         Fork: "/img/ForkKnife.png",
         Food: "Snack",
-        Path: "#",
-        Price: 30
+        Path: "./index1.html",
+        Price: 20
     },
     {
         img: "/img/food3.png",
@@ -31,8 +31,8 @@ const arrFood = [{
         Timer: "/img/Timer.png",
         Fork: "/img/ForkKnife.png",
         Food: "Healthy",
-        Path: "#",
-        Price: 30
+        Path: "./index1.html",
+        Price: 50
     },
     {
         img: "/img/food4.png",
@@ -40,8 +40,8 @@ const arrFood = [{
         Timer: "/img/Timer.png",
         Fork: "/img/ForkKnife.png",
         Food: "Noodles",
-        Path: "#",
-        Price: 30
+        Path: "./index1.html",
+        Price: 60
     },
     {
         img: "/img/food5.png",
@@ -49,11 +49,10 @@ const arrFood = [{
         Timer: "/img/Timer.png",
         Fork: "/img/ForkKnife.png",
         Food: "Sweet",
-        Path: "#",
-        Price: 30
+        Path: "./index1.html",
+        Price: 15
     },
 ]
-
 
 function ItemPage1() {
     try {
@@ -103,9 +102,9 @@ function ItemPage2() {
                     </a>
                 </div>
                 <h4 class="color--text"><a href="">${arrFood[i].desciption}</a></h4>
-                <span>${arrFood[i].Price}</span>
+                <span>$${arrFood[i].Price}</span>
                 <div class="Add">
-                    <button type="button">Add To Cart</button>
+                    <button type="button" class="AddToCart">Add To Cart</button>
                 </div>
             </div>
             `
@@ -114,7 +113,6 @@ function ItemPage2() {
             }
         }
         containtItemPage2.innerHTML = itemPage2;
-        console.log(itemPage2)
     } catch (error) {
 
     }
@@ -134,9 +132,9 @@ function ItemPage3() {
                     </a>
                 </div>
                 <h4 class="color--text"><a href="">${e.desciption}</a></h4>
-                <span>${e.Price}</span>
+                <span>$${e.Price}</span>
                 <div class="Add">
-                    <button type="button">Add To Cart</button>
+                    <button type="button" class="AddToCart">Add To Cart</button>
                 </div>
             </div>
             `

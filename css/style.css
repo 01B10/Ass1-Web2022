@@ -32,6 +32,7 @@ header {
 .nav ul li a {
     text-decoration: none;
     color: var(--color--text);
+    font-weight: bold;
 }
 
 .nav img {
@@ -58,6 +59,16 @@ header {
     width: 84px;
     height: 42px;
     line-height: 42px;
+}
+
+.cart a:first-child {
+    display: flex;
+    align-items: center;
+    width: 50px;
+}
+
+.cart a span {
+    color: red;
 }
 
 .cart a:nth-child(2) {
