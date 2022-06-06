@@ -97,8 +97,10 @@ item.forEach((e) => {
 
 addbtn.forEach((e, id) => {
     e.addEventListener("click", () => {
+        let name = e.parentElement.parentElement.children[1].textContent;
+        let prd = ListProduct.filter((item) => item.name == name);
         Uppoint();
-        AddProduct(id);
+        AddProduct(prd[0].id - 1);
         UpdateProduct();
     });
 })
@@ -115,6 +117,8 @@ function Uppoint() {
         cart.textContent = 1;
     }
     localStorage.setItem("Numbercart", numbercart);
+    console.log(numbercart);
+    return numbercart;
 }
 
 function SavePoint() {
@@ -152,7 +156,7 @@ function ChangeBanner() {
                 </h2>
                 <p>${item.desc}</p>
                 <form action="">
-                    <input type="text" name="" class="inputPage2" placeholder="Quantity" required>
+                    <input type="text" name="" class="inputPage2" placeholder="Quantity..." required>
                     <input type="submit" class="btnPage2" value="Add To Cart">
                 </form>
             </div>
@@ -160,6 +164,7 @@ function ChangeBanner() {
                 <img src= ${item.image} alt="">
             </div>
             `
+            addBanner();
         })
     } catch (error) {
 
@@ -227,10 +232,36 @@ function RemoveItem(key) {
         localStorage.setItem("Numbercart", (parseInt(Numbercart) - numberItem));
         cartItem.delete(`${key}`);
         localStorage.setItem(LocalCart.key, JSON.stringify(Object.fromEntries(cartItem)));
-        console.log(Numbercart);
     }
     UpdateProduct();
     SavePoint();
+}
+
+function addBanner() {
+    let btnPage2 = document.querySelector(".btnPage2");
+    let cartItem = LocalCart.getLocalCart();
+    btnPage2.addEventListener("click", (x) => {
+        let itemBanner = localStorage.getItem("Page");
+        itemBanner = JSON.parse(itemBanner);
+        let id = Object.values(itemBanner)[0].id - 1;
+        let inputPage2 = document.querySelector(".inputPage2");
+        if (isNaN(inputPage2.value) || inputPage2.value == '' || inputPage2.value == '0') {
+            x.preventDefault();
+            alert("Số lượng không hợp lệ!!!");
+            return 0;
+        } else {
+            if (cartItem.has(`${id}`)) {
+                let item = cartItem.get(`${id}`);
+                item.quantity += parseInt(inputPage2.value);
+                cartItem.set(`${id}`, item);
+            } else {
+                Object.values(itemBanner)[0].quantity = parseInt(inputPage2.value);
+                cartItem.set(`${id}`, Object.values(itemBanner)[0]);
+            }
+        }
+        localStorage.setItem(LocalCart.key, JSON.stringify(Object.fromEntries(cartItem)));
+        localStorage.setItem("Numbercart", Uppoint() + parseInt(inputPage2.value) - 1);
+    });
 }
 
 ChangeBanner()
