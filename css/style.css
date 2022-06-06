@@ -556,6 +556,44 @@ form label h4 {
     margin-bottom: 20px;
 }
 
+.ContainProduct {
+    display: flex;
+    justify-content: center;
+}
+
+table {
+    width: 40%;
+    background-color: lightcoral;
+    border-collapse: collapse;
+    border-radius: 5px;
+}
+
+table tr th {
+    padding: 10px;
+    height: 50px;
+    border-bottom: 5px solid lightblue;
+}
+
+tbody tr {
+    text-align: center;
+    height: 70px;
+    border-bottom: 5px solid lightblue;
+}
+
+tbody tr td ion-icon {
+    font-size: 25px;
+    cursor: pointer;
+}
+
+tbody tr td ion-icon:active {
+    color: #F54748;
+}
+
+tbody img {
+    max-width: 10vw;
+    border-radius: 5px;
+}
+
 @media screen and (max-width:515px) {
     .banner .banner--img img {
         image-rendering: pixelated;

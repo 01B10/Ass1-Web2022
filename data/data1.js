@@ -86,15 +86,42 @@ const ListCategory = [{
 ]
 
 const item = document.querySelectorAll(".item");
+let addbtn = document.querySelectorAll(".AddToCart");
 item.forEach((e) => {
     e.addEventListener("click", (x) => {
-        // x.preventDefault();
         let name = e.children[1].children[0].textContent;
         let prd = ListProduct.filter((item) => item.name == name);
         LinkPage(prd[0]);
-        AddProduct(prd[0]);
     });
 })
+
+addbtn.forEach((e, id) => {
+    e.addEventListener("click", () => {
+        Uppoint();
+        AddProduct(id);
+        UpdateProduct();
+    });
+})
+
+function Uppoint() {
+    let cart = document.querySelector(".cart a span");
+    let numbercart = localStorage.getItem("Numbercart");
+    numbercart = parseInt(numbercart);
+    if (numbercart) {
+        numbercart += 1;
+        cart.textContent = numbercart;
+    } else {
+        numbercart = 1;
+        cart.textContent = 1;
+    }
+    localStorage.setItem("Numbercart", numbercart);
+}
+
+function SavePoint() {
+    let cart = document.querySelector(".cart a span");
+    let numbercart = localStorage.getItem("Numbercart");
+    cart.textContent = numbercart;
+}
 
 function LinkPage(product) {
     let page = localStorage.getItem("Page");
@@ -139,22 +166,73 @@ function ChangeBanner() {
     }
 }
 
-function AddProduct(product) {
-    let arrItem = localStorage.getItem("arrItem");
-    arrItem = JSON.parse(arrItem);
-    if (arrItem) {
-        arrItem = {
-            ...arrItem,
-            [product.id]: product
-        }
-        arrItem[product.id].quantity += 1;
+class LocalCart {
+    static key = "arrItem";
+    static getLocalCart() {
+        const cart = localStorage.getItem(LocalCart.key);
+        let cartMap = new Map();
+        if (cart === null || cart.length == 0) return cartMap
+        return new Map(Object.entries(JSON.parse(cart)));
+    }
+}
+
+function AddProduct(id) {
+    let cartMap = LocalCart.getLocalCart();
+    if (cartMap.has(`${id}`)) {
+        let itemmap = cartMap.get(`${id}`);
+        itemmap.quantity += 1;
+        cartMap.set(`${id}`, itemmap);
     } else {
-        product.quantity = 1;
-        arrItem = {
-            [product.id]: product
+        ListProduct[id].quantity = 1;
+        cartMap.set(`${id}`, ListProduct[id])
+    }
+    localStorage.setItem(LocalCart.key, JSON.stringify(Object.fromEntries(cartMap)));
+}
+
+
+
+function UpdateProduct() {
+    let tbody = document.querySelector("table tbody");
+    let cartMap = LocalCart.getLocalCart();
+    if (tbody) {
+        tbody.innerHTML = "";
+        for (const [key, value] of cartMap.entries()) {
+            const cartItem = document.createElement('tr');
+            cartItem.classList.add("cart-item");
+            cartItem.innerHTML =
+                `<td>
+                <ion-icon name="close-outline" class="remove"></ion-icon>
+            </td>
+            <td>
+                <img src=${value.image} alt="">
+            </td>
+            <td>${value.name}</td>
+            <td>${value.category}</td>
+            <td>${value.quantity}</td>
+            <td>${value.price * value.quantity}</td>
+            `;
+            cartItem.firstElementChild.children[0].addEventListener("click", () => {
+                RemoveItem(key);
+            });
+            tbody.append(cartItem);
         }
     }
-    localStorage.setItem("arrItem", JSON.stringify(arrItem));
+}
+
+function RemoveItem(key) {
+    let cartItem = LocalCart.getLocalCart();
+    if (cartItem.has(`${key}`)) {
+        let Numbercart = localStorage.getItem("Numbercart");
+        let numberItem = cartItem.get(`${key}`).quantity;
+        localStorage.setItem("Numbercart", (parseInt(Numbercart) - numberItem));
+        cartItem.delete(`${key}`);
+        localStorage.setItem(LocalCart.key, JSON.stringify(Object.fromEntries(cartItem)));
+        console.log(Numbercart);
+    }
+    UpdateProduct();
+    SavePoint();
 }
 
 ChangeBanner()
+SavePoint();
+UpdateProduct();
