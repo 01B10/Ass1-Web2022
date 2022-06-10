@@ -55,55 +55,121 @@ const ListProduct = [{
 ]
 const ListCategory = [{
         id: 1,
-        name: "breakfast",
+        name: "Breakfast",
         image: "/img/categories.png"
     },
     {
         id: 2,
-        name: "vegan",
-        image: "/img/categories.png1"
+        name: "Vegan",
+        image: "/img/categories1.png"
     },
     {
         id: 3,
-        name: "meat",
-        image: "/img/categories.png2"
+        name: "Meat",
+        image: "/img/categories2.png"
     },
     {
         id: 4,
-        name: "dessert",
-        image: "/img/categories.png3"
+        name: "Dessert",
+        image: "/img/categories3.png"
     },
     {
         id: 5,
-        name: "lunch",
-        image: "/img/categories.png4"
+        name: "Lunch",
+        image: "/img/categories4.png"
     },
     {
         id: 6,
-        name: "chocolate",
-        image: "/img/categories.png5"
+        name: "Chocolate",
+        image: "/img/categories5.png"
     }
 ]
 
 const item = document.querySelectorAll(".item");
-let addbtn = document.querySelectorAll(".AddToCart");
-item.forEach((e) => {
-    e.addEventListener("click", (x) => {
-        let name = e.children[1].children[0].textContent;
-        let prd = ListProduct.filter((item) => item.name == name);
-        LinkPage(prd[0]);
-    });
-})
+const CategoriesAll = document.querySelector(".CategoriesAll");
+const menuList = document.querySelector(".menu");
 
-addbtn.forEach((e, id) => {
-    e.addEventListener("click", () => {
-        let name = e.parentElement.parentElement.children[1].textContent;
-        let prd = ListProduct.filter((item) => item.name == name);
-        Uppoint();
-        AddProduct(prd[0].id - 1);
-        UpdateProduct();
-    });
-})
+if (CategoriesAll) {
+    ListCategory.forEach((itm) => {
+        CategoriesAll.innerHTML += `
+        <div class="Categories--img">
+            <a href="#"><img src=${itm.image} alt=""></a>
+            <h4><a href="#">${itm.name}</a></h4>
+        </div>
+        `
+    })
+}
+
+if (menuList) {
+    ListCategory.forEach((item) => {
+        menuList.innerHTML += `
+        <ul>
+            <li><a href="./Product.html?id=${item.id}">${item.name}</a></li>
+        </ul>
+        `
+    })
+}
+
+function ItemPage3(data) {
+    var containtItemPage3 = document.querySelector(".containt--df1");
+    if (containtItemPage3) {
+        containtItemPage3.innerHTML = '';
+        var itemPage3 = data.map(e => {
+            return `
+            <div class="item">
+                <div class="img--item">
+                    <a href=${e.Path}?id=${e.id}>
+                    <img src= ${e.image} alt="">
+                    </a>
+                </div>
+                <h4 class="color--text"><a href=${e.Path}?id=${e.id}>${e.name}</a></h4>
+                <span>$${e.Price}</span>
+                <div class="Add">
+                    <button type="button" class="AddToCart">Add To Cart</button>
+                </div>
+            </div>
+            `
+        })
+        containtItemPage3.innerHTML = itemPage3.join("");
+        AddItem();
+    }
+}
+
+function ListProducts() {
+    let id = new URLSearchParams(window.location.search).get("id");
+    let listItem = ListProduct.filter((item) => item.category == id);
+    if (id) {
+        ItemPage3(listItem);
+    } else {
+        ItemPage3(ListProduct);
+    }
+}
+
+function AddItem() {
+    const addbtn = document.querySelectorAll(".AddToCart");
+    addbtn.forEach((e) => {
+        e.addEventListener("click", () => {
+            let name = e.parentElement.parentElement.children[1].textContent;
+            let prd = ListProduct.filter((item) => item.name == name);
+            Empty();
+            Uppoint();
+            AddProduct(prd[0].id - 1);
+            UpdateProduct();
+        });
+    })
+}
+
+function Empty() {
+    let numbercart = localStorage.getItem("Numbercart");
+    let empty = document.querySelector(".ContainProduct h3");
+    if (empty) {
+        if (parseInt(numbercart)) {
+            empty.style.cssText = "display: none";
+        } else {
+            empty.style.cssText = "display: block";
+        }
+    }
+}
 
 function Uppoint() {
     let cart = document.querySelector(".cart a span");
@@ -117,7 +183,6 @@ function Uppoint() {
         cart.textContent = 1;
     }
     localStorage.setItem("Numbercart", numbercart);
-    console.log(numbercart);
     return numbercart;
 }
 
@@ -125,50 +190,6 @@ function SavePoint() {
     let cart = document.querySelector(".cart a span");
     let numbercart = localStorage.getItem("Numbercart");
     cart.textContent = numbercart;
-}
-
-function LinkPage(product) {
-    let page = localStorage.getItem("Page");
-    page = JSON.parse(page);
-    if (page) {
-        page = {
-            [product.id]: product,
-        }
-    } else {
-        page = {
-            [product.id]: product,
-        }
-    }
-    localStorage.setItem("Page", JSON.stringify(page));
-    ChangeBanner();
-}
-
-function ChangeBanner() {
-    const banner = document.querySelector(".diffentBanner");
-    try {
-        banner.innerHTML = "";
-        Object.values(JSON.parse(localStorage.getItem("Page"))).forEach((item) => {
-            banner.innerHTML = `
-            <div class="text--form">
-                <h2>
-                    ${item.name}<br>
-                    <span>$${item.price}</span>
-                </h2>
-                <p>${item.desc}</p>
-                <form action="">
-                    <input type="text" name="" class="inputPage2" placeholder="Quantity..." required>
-                    <input type="submit" class="btnPage2" value="Add To Cart">
-                </form>
-            </div>
-            <div class="banner--img">
-                <img src= ${item.image} alt="">
-            </div>
-            `
-            addBanner();
-        })
-    } catch (error) {
-
-    }
 }
 
 class LocalCart {
@@ -206,15 +227,23 @@ function UpdateProduct() {
             cartItem.classList.add("cart-item");
             cartItem.innerHTML =
                 `<td>
-                <ion-icon name="close-outline" class="remove"></ion-icon>
-            </td>
-            <td>
-                <img src=${value.image} alt="">
-            </td>
-            <td>${value.name}</td>
-            <td>${value.category}</td>
-            <td>${value.quantity}</td>
-            <td>${value.price * value.quantity}</td>
+                    <ion-icon name="close-outline" class="remove"></ion-icon>
+                </td>
+                <td>
+                    <img src=${value.image} alt="">
+                </td>
+                <td>${value.name}</td>
+                <td>${value.category}</td>
+                <td class="quantity">
+                    <span>
+                        <ion-icon name="arrow-back-outline"></ion-icon>
+                    </span>
+                    <span>${value.quantity}</span>
+                    <span>
+                        <ion-icon name="arrow-forward-outline"></ion-icon>
+                    </span>
+                </td>
+                <td>${value.price * value.quantity}</td>
             `;
             cartItem.firstElementChild.children[0].addEventListener("click", () => {
                 RemoveItem(key);
@@ -235,35 +264,39 @@ function RemoveItem(key) {
     }
     UpdateProduct();
     SavePoint();
+    Empty();
 }
 
 function addBanner() {
     let btnPage2 = document.querySelector(".btnPage2");
     let cartItem = LocalCart.getLocalCart();
-    btnPage2.addEventListener("click", (x) => {
-        let itemBanner = localStorage.getItem("Page");
-        itemBanner = JSON.parse(itemBanner);
-        let id = Object.values(itemBanner)[0].id - 1;
-        let inputPage2 = document.querySelector(".inputPage2");
-        if (isNaN(inputPage2.value) || inputPage2.value == '' || inputPage2.value == '0') {
-            x.preventDefault();
-            alert("Số lượng không hợp lệ!!!");
-            return 0;
-        } else {
-            if (cartItem.has(`${id}`)) {
-                let item = cartItem.get(`${id}`);
-                item.quantity += parseInt(inputPage2.value);
-                cartItem.set(`${id}`, item);
+    if (btnPage2) {
+        btnPage2.addEventListener("click", (x) => {
+            let id = new URLSearchParams(window.location.search).get("id");
+            id = parseInt(id) - 1;
+            let inputPage2 = document.querySelector(".inputPage2");
+            if (isNaN(inputPage2.value) || inputPage2.value == '' || inputPage2.value == '0') {
+                alert("Số lượng không hợp lệ!!!");
+                return 0;
             } else {
-                Object.values(itemBanner)[0].quantity = parseInt(inputPage2.value);
-                cartItem.set(`${id}`, Object.values(itemBanner)[0]);
+                if (cartItem.has(`${id}`)) {
+                    let product = cartItem.get(`${id}`);
+                    product.quantity += parseInt(inputPage2.value);
+                    cartItem.set(`${id}`, product);
+                } else {
+                    ListProduct[id].quantity = parseInt(inputPage2.value);
+                    cartItem.set(`${id}`, ListProduct[id]);
+                }
             }
-        }
-        localStorage.setItem(LocalCart.key, JSON.stringify(Object.fromEntries(cartItem)));
-        localStorage.setItem("Numbercart", Uppoint() + parseInt(inputPage2.value) - 1);
-    });
+            localStorage.setItem(LocalCart.key, JSON.stringify(Object.fromEntries(cartItem)));
+            localStorage.setItem("Numbercart", Uppoint() + parseInt(inputPage2.value) - 1);
+            SavePoint();
+        });
+    }
 }
 
-ChangeBanner()
 SavePoint();
 UpdateProduct();
+addBanner();
+Empty();
+ListProducts();

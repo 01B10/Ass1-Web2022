@@ -89,13 +89,13 @@ window.onscroll = () => {
 }
 
 function ItemPage1(data) {
-    try {
-        var containtItem = document.querySelector(".containt--item");
+    var containtItem = document.querySelector(".containt--item");
+    if (containtItem) {
         var item = data.map(e => {
             return `
                 <div class="item">
                     <div class="img--item">
-                        <a href=${e.Path}>
+                        <a href=${e.Path}?id=${e.id}>
                             <img src=${e.img} alt="">
                         </a>
                     </div>
@@ -113,10 +113,8 @@ function ItemPage1(data) {
                 </div>
             `
         });
-        containtItem.innerHTML = item.join("")
+        containtItem.innerHTML = item.join("");
         moveItem();
-    } catch (error) {
-
     }
 }
 
@@ -142,70 +140,38 @@ function changeProduct() {
 changeProduct();
 
 function moveItem() {
-    const item = document.querySelectorAll(".item");
-    item.forEach((e) => {
-        e.addEventListener("click", (x) => {
-            let name = e.children[1].children[0].textContent;
-            let prd = ListProduct.filter((item) => item.name == name);
-            LinkPage(prd[0]);
-        });
-    })
-}
-
-
-function LinkPage(product) {
-    let page = localStorage.getItem("Page");
-    page = JSON.parse(page);
-    if (page) {
-        page = {
-            [product.id]: product,
-        }
-    } else {
-        page = {
-            [product.id]: product,
-        }
-    }
-    localStorage.setItem("Page", JSON.stringify(page));
-    ChangeBanner();
-}
-
-function ChangeBanner() {
     const banner = document.querySelector(".diffentBanner");
-    try {
+    const id = new URLSearchParams(window.location.search).get("id");
+    if (id && banner) {
         banner.innerHTML = "";
-        Object.values(JSON.parse(localStorage.getItem("Page"))).forEach((item) => {
-            banner.innerHTML = `
+        const item = arrFood.find((x) => x.id == id);
+        banner.innerHTML += `
             <div class="text--form">
                 <h2>
                     ${item.name}<br>
-                    <span>$${item.price}</span>
+                    <span>$${item.Price}</span>
                 </h2>
                 <p>${item.desc}</p>
                 <form action="">
                     <input type="text" name="" class="inputPage2" placeholder="Quantity..." required>
-                    <input type="submit" class="btnPage2" value="Add To Cart">
+                    <input type="button" class="btnPage2" value="Add To Cart">
                 </form>
             </div>
             <div class="banner--img">
-                <img src= ${item.image} alt="">
-            </div>
-            `
-        })
-    } catch (error) {
-
+                <img src= ${item.img} alt="">
+            </div>`
     }
 }
 
 function ItemPage2() {
-    try {
-        var containtItemPage2 = document.querySelector(".containt--df");
+    var containtItemPage2 = document.querySelector(".containt--df");
+    if (containtItemPage2) {
         var itemPage2 = "";
-        for (i = 3; i <= arrFood.length; i++) {
-            try {
-                itemPage2 += `
+        for (i = 3; i < arrFood.length; i++) {
+            itemPage2 += `
             <div class="item">
                 <div class="img--item">
-                    <a href="">
+                    <a href=${arrFood[i].Path}?id=${arrFood[i].id}>
                     <img src= ${arrFood[i].img} alt="">
                     </a>
                 </div>
@@ -216,41 +182,34 @@ function ItemPage2() {
                 </div>
             </div>
             `
-            } catch (error) {
-
-            }
         }
         containtItemPage2.innerHTML = itemPage2;
-    } catch (error) {
-
     }
 }
 
 ItemPage2();
 
-function ItemPage3() {
-    try {
-        var containtItemPage3 = document.querySelector(".containt--df1");
-        var itemPage3 = arrFood.map(e => {
-            return `
-            <div class="item">
-                <div class="img--item">
-                    <a href=${e.Path}>
-                    <img src= ${e.img} alt="">
-                    </a>
-                </div>
-                <h4 class="color--text"><a href=${e.Path}>${e.name}</a></h4>
-                <span>$${e.Price}</span>
-                <div class="Add">
-                    <button type="button" class="AddToCart">Add To Cart</button>
-                </div>
-            </div>
-            `
-        })
-        containtItemPage3.innerHTML = itemPage3.join("");
-    } catch (error) {
+// function ItemPage3() {
+//     var containtItemPage3 = document.querySelector(".containt--df1");
+//     if (containtItemPage3) {
+//         var itemPage3 = arrFood.map(e => {
+//             return `
+//             <div class="item">
+//                 <div class="img--item">
+//                     <a href=${e.Path}?id=${e.id}>
+//                     <img src= ${e.img} alt="">
+//                     </a>
+//                 </div>
+//                 <h4 class="color--text"><a href=${e.Path}?id=${e.id}>${e.name}</a></h4>
+//                 <span>$${e.Price}</span>
+//                 <div class="Add">
+//                     <button type="button" class="AddToCart">Add To Cart</button>
+//                 </div>
+//             </div>
+//             `
+//         })
+//         containtItemPage3.innerHTML = itemPage3.join("");
+//     }
+// }
 
-    }
-}
-
-ItemPage3();
+// ItemPage3();

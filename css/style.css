@@ -352,6 +352,11 @@ header {
 .CategoriesAll .Categories--img h4 a {
     font-size: 1.2rem;
     text-decoration: none;
+    color: #2D3748;
+}
+
+.CategoriesAll .Categories--img h4 a:hover {
+    color: gray;
 }
 
 .Contact {
@@ -575,12 +580,14 @@ form label h4 {
 }
 
 .ContainProduct {
+    width: 355px;
+    margin: 0 auto;
     display: flex;
-    justify-content: center;
+    text-align: center;
+    flex-direction: column;
 }
 
 table {
-    width: 40%;
     background-color: lightcoral;
     border-collapse: collapse;
     border-radius: 5px;
@@ -610,6 +617,15 @@ tbody tr td ion-icon:active {
 tbody img {
     max-width: 10vw;
     border-radius: 5px;
+}
+
+.cart-item .quantity ion-icon {
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.cart-item .quantity ion-icon:active {
+    color: #37A9CD;
 }
 
 @media screen and (max-width:515px) {
@@ -642,5 +658,8 @@ tbody img {
     }
     .menuList {
         display: block;
+    }
+    table tr td:nth-child(3) {
+        font-size: 2vw;
     }
 }
